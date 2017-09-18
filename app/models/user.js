@@ -1,5 +1,4 @@
 const ObjectId = require('mongodb').ObjectId
-const cwmodels = require('cw-models');
 var bcrypt = require('bcrypt')
 var crypto = require('crypto')
 var jwt = require('jwt-simple')
@@ -25,12 +24,11 @@ module.exports.add = function (userObj, options) {
   // console.log('ehheyere1 ', userObj.email, userObj.password, options)
 
   if(_.isNil(db)) {
-    options.error = new Error("DB object is undefined or null")
-    q.reject(new CWError("SOMETHING_WENT_WRONG", options))
+    q.reject("SOMETHING_WENT_WRONG")
     return q.promise
   }
   if (_.isNil(userObj.email) || _.isNil(userObj.password)) {
-    q.reject(new CWError("PARAMETERS_MISSING", options))
+    q.reject("PARAMETERS_MISSING")
     return q.promise
   }
   else {
@@ -57,8 +55,7 @@ module.exports.findOne = function (selectionCriteria, queryOptions, options) {
   var db = options.db
   var logger = options.logger
   if(_.isNil(db)) {
-    options.error = new Error("DB object is undefined or null")
-    q.reject(new CWError("SOMETHING_WENT_WRONG", options))
+    q.reject("SOMETHING_WENT_WRONG")
     return q.promise
   }
   if(_.isNil(selectionCriteria))
@@ -69,7 +66,7 @@ module.exports.findOne = function (selectionCriteria, queryOptions, options) {
   db.collection(collectionName).findOne(selectionCriteria, queryOptions, function (err,doc) {
     if(err) { 
       options.error = err
-      q.reject(new CWError("SOMETHING_WENT_WRONG", options))
+      q.reject("SOMETHING_WENT_WRONG")
       return q.promise
     }
     logger("Retrieving user information")

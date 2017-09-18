@@ -9,15 +9,15 @@ var config = require(__dirname + '/config')
   , appDir = config.appDir
   , db = require(appDir + '/config/db.js')
   , app = express()
-  , logger
-
+  , loggerObj
+, addoptions = require(appDir +'/addoptions.js') 
 
 app.use(express.static('public'))
 // app.use(busboy())
 app.use(bodyParser.json({limit: '50mb'}))
 app.set('port', process.env.PORT || config.port)
 
-logger = console.log
+loggerObj = console.log
 app.use(function(req, res, next) {
  res.header('Access-Control-Allow-Origin', '*')
  res.header( "Access-Control-Allow-Methods" , "GET,POST,PUT,DELETE,OPTIONS") 
@@ -29,10 +29,13 @@ app.use(function(req, res, next) {
 
 db.init(function(err) {
   var server =  app.listen(app.get('port'), function(){
-    logger.info('Express server listening on port ' + server.address().port)
+
+    loggerObj('Express server listening on port ' + server.address().port)
   })  
   var options = {db: db.client, logger: loggerObj}
-   app.use('/', require(appDir + '/routes'))
+app.use('/', require(appDir + '/routes'))
+
+app.use('/', addoptions(options))
 })
 
 
@@ -115,6 +118,11 @@ app.get('/scrape' ,function (req,res) {
         }
 
     })
+})
+        }
+
+    })
+})
 })
 app.get('/scrapeGrammar',function (req,res) {
     url2='https://www.englishgrammar.org/rules-review/';
@@ -257,11 +265,6 @@ app.post('/getuser' , function(req,res){
     console.log("servergetname");
     var username={
         email:req.body.email,
-    }
-    db.getusr(username,function(result){
-        console.log("getnameserver" +result);
-        res.send(result);
-    })
 })*/
 
 

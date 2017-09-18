@@ -1,15 +1,16 @@
-var CWModel = require('cw-models')
-, Q = require('q')
+var Q = require('q')
 , _ = require('lodash')
 , config = require(__dirname + '/../../config')
-, appDir = config.config.appDir
-, userModel = require(appDir + 'app/modess/user')
+
+var  appDir = config.appDir
+, userModel = require(appDir + 'app/models/user')
 
 
-module.exports.connect = function (req, res) {
-  var options = utils.fetchOptionsFromHeaders(req)
-  , db = options.db.db(req.headers.organisation)
-  , logger  = options.logger
+module.exports.create= function (req, res) {
+console.log(req)  
+var options = req.headers.options
+  , db = options.db
+,logger  = options.logger
   , finalRes = {
         "status" : "failure",
         "message" : "",

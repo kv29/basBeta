@@ -9,7 +9,7 @@ var config = require(__dirname + '/config')
   , appDir = config.appDir
   , db = require(appDir + '/config/db.js')
   , app = express()
-  , loggerObj
+  , logger
 
 
 app.use(express.static('public'))
@@ -17,7 +17,7 @@ app.use(express.static('public'))
 app.use(bodyParser.json({limit: '50mb'}))
 app.set('port', process.env.PORT || config.port)
 
-loggerObj = console.log
+logger = console.log
 app.use(function(req, res, next) {
  res.header('Access-Control-Allow-Origin', '*')
  res.header( "Access-Control-Allow-Methods" , "GET,POST,PUT,DELETE,OPTIONS") 
@@ -29,12 +29,10 @@ app.use(function(req, res, next) {
 
 db.init(function(err) {
   var server =  app.listen(app.get('port'), function(){
-    loggerObj.info('Express server listening on port ' + server.address().port)
+    logger.info('Express server listening on port ' + server.address().port)
   })  
   var options = {db: db.client, logger: loggerObj}
-      console.log("server.js :35", options)
-       
-  app.use('/', require(appDir + '/routes'))
+   app.use('/', require(appDir + '/routes'))
 })
 
 
@@ -266,7 +264,4 @@ app.post('/getuser' , function(req,res){
     })
 })*/
 
-app.listen(3300,function(){
-    console.log("server running on port 3300");
-})
-exports = module.exports=app;
+

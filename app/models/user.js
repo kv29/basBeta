@@ -4,7 +4,7 @@ var crypto = require('crypto')
 var jwt = require('jwt-simple')
 var Q = require('q')
 var async = require('async')
-
+, _ = require('lodash')
 var config = require(__dirname + '/../../config')
 var appDir = config.appDir
 
@@ -65,7 +65,6 @@ module.exports.findOne = function (selectionCriteria, queryOptions, options) {
 
   db.collection(collectionName).findOne(selectionCriteria, queryOptions, function (err,doc) {
     if(err) { 
-      options.error = err
       q.reject("SOMETHING_WENT_WRONG")
       return q.promise
     }

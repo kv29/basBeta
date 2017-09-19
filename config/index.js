@@ -4,9 +4,6 @@ const isThere = require('is-there')
 
 var environmentOptions
   , projectName
-
-  console.log("index.js :10", envFilePath)
-
 if(!isThere(envFilePath))
   console.log("Environment file missing")
 else

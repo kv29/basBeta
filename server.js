@@ -10,7 +10,7 @@ var config = require(__dirname + '/config')
   , db = require(appDir + '/config/db.js')
   , app = express()
   , loggerObj
-, addoptions = require(appDir +'/addoptions.js') 
+  , addoptions = require(appDir +'/addoptions.js') 
 
 app.use(express.static('public'))
 // app.use(busboy())
@@ -33,9 +33,8 @@ db.init(function(err) {
     loggerObj('Express server listening on port ' + server.address().port)
   })  
   var options = {db: db.client, logger: loggerObj}
-app.use('/', require(appDir + '/routes'))
-
-app.use('/', addoptions(options))
+  app.use('/', addoptions(options))
+  app.use('/', require(appDir + '/routes'))
 })
 
 

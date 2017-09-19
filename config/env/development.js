@@ -1,7 +1,7 @@
 module.exports = {
   server:{
     host: '18.221.134.23',
-    port: '80',
+    port: '4001',
   },
   database: {
     name: "basbeta",
